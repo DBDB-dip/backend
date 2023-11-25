@@ -30,6 +30,18 @@ public class ReservationController {
     ) {
         return new ResponseEntity<>(reservationService.getAllReservation(userId), HttpStatus.OK);
     }
+    @GetMapping("/before")
+    public ResponseEntity<List<Reservation>> getAllReservationByUserAndBeforeToday(
+            @RequestParam("userId") Integer userId
+    ) {
+        return new ResponseEntity<>(reservationService.getAllReservationBeforeToday(userId), HttpStatus.OK);
+    }
+    @GetMapping("after")
+    public ResponseEntity<List<Reservation>> getAllReservationByUserAndAfterToday(
+            @RequestParam("userId") Integer userId
+    ) {
+        return new ResponseEntity<>(reservationService.getAllReservationAfterToday(userId), HttpStatus.OK);
+    }
     @PostMapping("/reviews")
     public ResponseEntity<String> createReview(
             @RequestParam("reservationId") Integer reservationId,
