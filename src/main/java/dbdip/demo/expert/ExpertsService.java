@@ -2,6 +2,9 @@ package dbdip.demo.expert;
 
 import dbdip.demo.expert.entity.Experts;
 import dbdip.demo.expert.repository.ExpertsRepository;
+import dbdip.demo.reservation.entity.Review;
+import dbdip.demo.reservation.repository.ReservationRepository;
+import dbdip.demo.reservation.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExpertsService {
     private final ExpertsRepository expertsRepository;
+    private final ReviewRepository reviewRepository;
 
     public List<Experts> filterExperts(String field, Double minPrice, Double maxPrice, String city) {
         // 상담분야, 최소 금액, 최대 금액, 지역에 따라 전문가 필터링하기
@@ -33,4 +37,9 @@ public class ExpertsService {
         }
     }
 
+    public List<Review> getAllReviewsForExpert(Integer expertId) {
+        Experts expert = expertsRepository.findById(expertId).orElse(null);
+
+        return reviewRepository.findAllByExperts(expert);
+    }
 }
