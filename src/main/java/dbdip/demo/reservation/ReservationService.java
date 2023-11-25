@@ -56,5 +56,13 @@ public class ReservationService {
         Users users = usersRepository.findById(userId).orElse(null);
         return reservationRepository.findAllByUsers(users);
     }
+    public List<Reservation> getAllReservationBeforeToday(Integer userId){
+        Users users = usersRepository.findById(userId).orElse(null);
+        return reservationRepository.findAllByUsersBeforeToday(users);
+    }
+    public List<Reservation> getAllReservationAfterToday(Integer userId){
+        Users users = usersRepository.findById(userId).orElse(null);
+        return reservationRepository.findAllByUsersAfterToday(users);
+    }
 
 }
