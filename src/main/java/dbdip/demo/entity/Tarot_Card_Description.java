@@ -1,5 +1,6 @@
 package dbdip.demo.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
@@ -10,7 +11,10 @@ import lombok.Setter;
 @Setter
 public class Tarot_Card_Description {
     @Id
+    @Column(name = "cardid")
     private Integer CardId;
+    @Column(name = "card")
     private Integer Card;
+    @Column(name = "description")
     private String Description;
 }
