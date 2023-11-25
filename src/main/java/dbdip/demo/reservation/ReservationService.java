@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +51,10 @@ public class ReservationService {
 
             reviewRepository.save(review);
         }
+    }
+    public List<Reservation> getAllReservation(Integer userId){
+        Users users = usersRepository.findById(userId).orElse(null);
+        return reservationRepository.findAllByUsers(users);
     }
 
 }
