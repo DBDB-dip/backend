@@ -32,4 +32,11 @@ public class UsersService {
         else
             return list.get(0).getId();
     }
+
+    public boolean isEmailOverlap(String email)
+    {
+        List<Users> list = usersRepository.findByEmail(email);
+
+        return !list.isEmpty();
+    }
 }
