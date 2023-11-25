@@ -34,4 +34,5 @@ public class Experts {
     @OneToOne(mappedBy = "experts", cascade = CascadeType.ALL)
     private Consult consult;
 
+
 }

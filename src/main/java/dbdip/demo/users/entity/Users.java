@@ -1,4 +1,4 @@
-package entity;
+package dbdip.demo.users.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Setter
 public class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
     private String Password;
     private String Name;
