@@ -12,20 +12,20 @@ import java.util.List;
 public class ExpertsService {
     private final ExpertsRepository expertsRepository;
 
-    public List<Experts> filterExperts(String field, Double price, String city) {
-        // 상담분야, 요금, 지역에 따라 전문가 필터링하기
-        if (field != null && price != null && city != null) {
-            return expertsRepository.findByFieldAndPriceAndCity(field, price, city);
-        } else if (field != null && price != null) {
-            return expertsRepository.findByFieldAndPrice(field, price);
+    public List<Experts> filterExperts(String field, Double minPrice, Double maxPrice, String city) {
+        // 상담분야, 최소 금액, 최대 금액, 지역에 따라 전문가 필터링하기
+        if (field != null && minPrice != null && maxPrice != null && city != null) {
+            return expertsRepository.findByFieldAndPriceBetweenAndCity(field, minPrice, maxPrice, city);
+        } else if (field != null && minPrice != null && maxPrice != null) {
+            return expertsRepository.findByFieldAndPriceBetween(field, minPrice, maxPrice);
         } else if (field != null && city != null) {
             return expertsRepository.findByFieldAndCity(field, city);
-        } else if (price != null && city != null) {
-            return expertsRepository.findByPriceAndCity(price, city);
+        } else if (minPrice != null && maxPrice != null && city != null) {
+            return expertsRepository.findByPriceBetweenAndCity(minPrice, maxPrice, city);
         } else if (field != null) {
             return expertsRepository.findByField(field);
-        } else if (price != null) {
-            return expertsRepository.findByPrice(price);
+        } else if (minPrice != null && maxPrice != null) {
+            return expertsRepository.findByPriceBetween(minPrice, maxPrice);
         } else if (city != null) {
             return expertsRepository.findByCity(city);
         } else {
