@@ -1,5 +1,7 @@
 package dbdip.demo.reservation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -9,13 +11,25 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class ReservationController {
     private final ReservationService reservationService;
-    @PostMapping("/create")
-    public void createReservation(
+    @PostMapping
+    public ResponseEntity<String> createReservation(
             @RequestParam("userId") Integer userId,
             @RequestParam("expertId") Integer expertId,
             @RequestParam("reservDate") LocalDate reservDate,
             @RequestParam("reservTime") Integer reservTime
     ) {
         reservationService.createReservation(userId, expertId, reservDate, reservTime);
+
+        return new ResponseEntity<>("Reservation created successfully", HttpStatus.CREATED);
+    }
+    @PostMapping("/reviews")
+    public ResponseEntity<String> createReview(
+            @RequestParam("reservationId") Integer reservationId,
+            @RequestParam("comments") String comments,
+            @RequestParam("starRate") Float starRate
+    ) {
+        reservationService.createReview(reservationId, comments, starRate);
+
+        return new ResponseEntity<>("Review created successfully", HttpStatus.CREATED);
     }
 }
