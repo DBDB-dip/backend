@@ -38,8 +38,6 @@ public class ExpertsService {
     }
 
     public List<Review> getAllReviewsForExpert(Integer expertId) {
-        Experts expert = expertsRepository.findById(expertId).orElse(null);
-
-        return reviewRepository.findAllByExperts(expert);
+        return reviewRepository.findAllByExperts(expertId);
     }
 }
