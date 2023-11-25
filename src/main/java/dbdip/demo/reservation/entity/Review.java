@@ -1,10 +1,7 @@
 package dbdip.demo.reservation.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Entity
@@ -12,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @Getter
+@Builder
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +19,7 @@ public class Review {
     @JoinColumn(name = "reservid")
     private Reservation reservation;
     @Column(name = "comments")
-    private String Comments;
+    private String comments;
     @Column(name = "starrate")
-    private Float StarRate;
+    private Float starRate;
 }

@@ -3,7 +3,9 @@ package dbdip.demo.reservation;
 import dbdip.demo.expert.entity.Experts;
 import dbdip.demo.expert.repository.ExpertsRepository;
 import dbdip.demo.reservation.entity.Reservation;
+import dbdip.demo.reservation.entity.Review;
 import dbdip.demo.reservation.repository.ReservationRepository;
+import dbdip.demo.reservation.repository.ReviewRepository;
 import dbdip.demo.users.entity.Users;
 import dbdip.demo.users.repository.UsersRepository;
 import jakarta.transaction.Transactional;
@@ -16,6 +18,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class ReservationService {
     private final ReservationRepository reservationRepository;
+    private final ReviewRepository reviewRepository;
     private final ExpertsRepository expertsRepository;
     private final UsersRepository usersRepository;
     @Transactional
@@ -32,6 +35,20 @@ public class ReservationService {
                     .build();
 
             reservationRepository.save(reservation);
+        }
+    }
+    @Transactional
+    public void createReview(Integer reservationId, String comments, Float starRate) {
+        Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
+
+        if (reservation != null) {
+            Review review = Review.builder()
+                    .reservation(reservation)
+                    .comments(comments)
+                    .starRate(starRate)
+                    .build();
+
+            reviewRepository.save(review);
         }
     }
 
