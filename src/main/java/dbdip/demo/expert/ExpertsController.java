@@ -1,11 +1,11 @@
 package dbdip.demo.expert;
 
 import dbdip.demo.expert.entity.Experts;
+import dbdip.demo.reservation.entity.Review;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +22,15 @@ public class ExpertsController {
             @RequestParam(required = false) String city
     ) {
         return expertsService.filterExperts(field, minPrice, maxPrice, city);
+    }
+    @GetMapping("/{expertId}/reviews")
+    public ResponseEntity<List<Review>> getAllReviewsForExpert(@PathVariable Integer expertId) {
+        List<Review> reviews = expertsService.getAllReviewsForExpert(expertId);
+
+        if (reviews != null && !reviews.isEmpty()) {
+            return new ResponseEntity<>(reviews, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
