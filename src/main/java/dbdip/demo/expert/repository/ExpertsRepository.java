@@ -8,15 +8,15 @@ import java.util.List;
 public interface ExpertsRepository extends JpaRepository<Experts, Integer> {
     List<Experts> findByField(String field);
 
-    List<Experts> findByPrice(Double price);
+    List<Experts> findByPriceBetween(Double minPrice, Double maxPrice);
 
     List<Experts> findByCity(String city);
 
-    List<Experts> findByFieldAndPrice(String field, Double price);
+    List<Experts> findByFieldAndPriceBetween(String field, Double minPrice, Double maxPrice);
 
     List<Experts> findByFieldAndCity(String field, String city);
 
-    List<Experts> findByPriceAndCity(Double price, String city);
+    List<Experts> findByPriceBetweenAndCity(Double minPrice, Double maxPrice, String city);
 
-    List<Experts> findByFieldAndPriceAndCity(String field, Double price, String city);
+    List<Experts> findByFieldAndPriceBetweenAndCity(String field, Double minPrice, Double maxPrice, String city);
 }
