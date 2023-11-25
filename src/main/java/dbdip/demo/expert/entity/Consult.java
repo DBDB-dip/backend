@@ -1,4 +1,4 @@
-package dbdip.demo.expert;
+package dbdip.demo.expert.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,20 +11,18 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @Getter
-public class Stores {
+@Table(name = "Consult")
+public class Consult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sid")
-    private int id;
-    @Column(name = "phonenumber")
-    private String phoneNumber;
-    @Column(name = "city")
-    private String city;
-    @Column(name = "zipcode")
-    private String zipCode;
+    @Column(name = "cid")
+    private Integer id;
+    @Column(name = "field")
+    private String field;
+    @Column(name = "price_hour")
+    private Double priceHour;
 
     @OneToOne
     @JoinColumn(name = "eid")
     private Experts experts;
-
 }

@@ -1,4 +1,4 @@
-package dbdip.demo.expert;
+package dbdip.demo.expert.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
