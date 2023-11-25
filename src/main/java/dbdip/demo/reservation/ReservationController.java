@@ -1,10 +1,12 @@
 package dbdip.demo.reservation;
+import dbdip.demo.reservation.entity.Reservation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/reservations")
@@ -21,6 +23,12 @@ public class ReservationController {
         reservationService.createReservation(userId, expertId, reservDate, reservTime);
 
         return new ResponseEntity<>("Reservation created successfully", HttpStatus.CREATED);
+    }
+    @GetMapping
+    public ResponseEntity<List<Reservation>> getAllReservationByUser(
+            @RequestParam("userId") Integer userId
+    ) {
+        return new ResponseEntity<>(reservationService.getAllReservation(userId), HttpStatus.OK);
     }
     @PostMapping("/reviews")
     public ResponseEntity<String> createReview(
