@@ -3,14 +3,17 @@ package dbdip.demo.reservation.entity;
 import dbdip.demo.expert.entity.Experts;
 import dbdip.demo.users.entity.Users;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 
 @Entity
+@Slf4j
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
 @Getter
-@Setter
+@Builder
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
