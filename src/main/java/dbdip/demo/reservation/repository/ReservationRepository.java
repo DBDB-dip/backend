@@ -12,13 +12,13 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
     List<Reservation> findAllByUsers(Users users);
-    @Query(value = "SELECT ExpertID, ReservDate, ReservTime " +
-            "FROM reservation WHERE userid = :usersId " +
-            "AND ReservDate <= :today")
+    @Query(value = "SELECT R.experts.id, R.reservDate, R.reservTime " +
+            "FROM Reservation R WHERE R.users.id = :usersId " +
+            "AND R.reservDate <= :today")
     List<Reservation> findAllByUsersBeforeToday(@Param("usersId") Integer usersId, @Param("today") LocalDate today);
-    @Query(value = "SELECT ExpertID, ReservDate, ReservTime " +
-            "FROM reservation WHERE userid = :usersId " +
-            "AND ReservDate > :today")
+    @Query(value = "SELECT R.experts.id, R.reservDate, R.reservTime " +
+            "FROM Reservation R WHERE R.users.id = :usersId " +
+            "AND R.reservDate > :today")
     List<Reservation> findAllByUsersAfterToday(@Param("usersId") Integer usersId, @Param("today") LocalDate today);
 
 }

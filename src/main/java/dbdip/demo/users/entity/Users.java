@@ -1,9 +1,6 @@
 package dbdip.demo.users.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Setter;
 import lombok.Getter;
 
@@ -15,11 +12,18 @@ import java.time.LocalDate;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
-    private String Password;
-    private String Name;
-    private String PhoneNumber;
-    private String Email;
-    private char Sex;
-    private LocalDate Birthdate;
+    @Column(name = "id")
+    private Integer id;
+    @Column(name = "password")
+    private String password;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "phonenumber")
+    private String phoneNumber;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "sex")
+    private char sex;
+    @Column(name = "birthdate")
+    private LocalDate birthdate;
 }

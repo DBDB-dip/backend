@@ -17,8 +17,8 @@ public class ExpertsController {
     @GetMapping("/filter")
     public List<Experts> filterExperts(
             @RequestParam(required = false) String field,
-            @RequestParam(required = false) Double minPrice,
-            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
             @RequestParam(required = false) String city
     ) {
         return expertsService.filterExperts(field, minPrice, maxPrice, city);

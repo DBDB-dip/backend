@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: teamplay
+    password: teamplay
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle12cDialect # ??? Hibernate ?? ?? (Oracle 12c)
+    hibernate:
+      ddl-auto: update
+    show-sql: true
