@@ -13,17 +13,17 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer Id;
+    private Integer id;
     @Column(name = "password")
-    private String Password;
+    private String password;
     @Column(name = "name")
-    private String Name;
+    private String name;
     @Column(name = "phonenumber")
-    private String PhoneNumber;
+    private String phoneNumber;
     @Column(name = "email")
-    private String Email;
+    private String email;
     @Column(name = "sex")
-    private char Sex;
+    private char sex;
     @Column(name = "birthdate")
-    private LocalDate Birthdate;
+    private LocalDate birthdate;
 }
