@@ -22,7 +22,7 @@ public class TodayTarot {
     private TodayTarotId id;
 
     @ManyToOne
-    @JoinColumn(name = "CardDescriptionId")
+    @JoinColumn(name = "carddescriptionid")
     private TarotCardDescription cardDescription;
 
 }

@@ -36,7 +36,7 @@ public class ReservationController {
     ) {
         return new ResponseEntity<>(reservationService.getAllReservationBeforeToday(userId), HttpStatus.OK);
     }
-    @GetMapping("after")
+    @GetMapping("/after")
     public ResponseEntity<List<Reservation>> getAllReservationByUserAndAfterToday(
             @RequestParam("userId") Integer userId
     ) {
