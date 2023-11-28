@@ -1,13 +1,18 @@
 package dbdip.demo.users;
 
 import dbdip.demo.users.entity.Users;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UsersController {
 
+    @Autowired
     private UsersService userService;
 
     @GetMapping("/join")
@@ -19,6 +24,7 @@ public class UsersController {
 
     // 가입 양식에 맞춰 user가 post 방식으로 데이터 전송
     @PostMapping("/joinpro")
+    @Transactional
     public String userJoinPro(Users user)
     {
         // ㅠㅠ if문에서 이메일이 중복되는 걸 검사하면 어떻게 처리해야할지 모르겠어요
@@ -40,18 +46,13 @@ public class UsersController {
     }
 
     // 로그인 시 email, 비밀번호가 해당 경로로 전송
+    // 로그인 실패시 -1, 성공시 uid 리턴
     @PostMapping("/login")
-    public String loginPro(String email, String password)
+    @ResponseBody
+    public Integer loginPro(
+            @RequestParam("email") String email,
+            @RequestParam("password") String password)
     {
-        int uid = userService.login(email, password);
-
-        // 로그인 실패
-        if(uid == -1)
-            // ㅠㅠ 로그인 실패 시 메인페이지로 돌아가야 하는데 어떻게 처리해야할지 모르겠어요..
-            return "";
-
-        // 로그인 성공 시 uid 리턴 받음
-        // ㅠㅠ 이에 대해 어떻게 처리해야할지 모르겠습니다
-        return "";
+        return userService.login(email, password);
     }
 }
