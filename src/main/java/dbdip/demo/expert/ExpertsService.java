@@ -1,6 +1,7 @@
 package dbdip.demo.expert;
 
 import dbdip.demo.expert.dto.ExpertsDto;
+import dbdip.demo.expert.dto.ReviewDto;
 import dbdip.demo.expert.repository.ExpertsRepository;
 import dbdip.demo.reservation.entity.Review;
 import dbdip.demo.reservation.repository.ReviewRepository;
@@ -53,7 +54,9 @@ public class ExpertsService {
         }
     }
 
-    public List<Review> getAllReviewsForExpert(Integer expertId) {
-        return reviewRepository.findAllByExperts(expertId);
+    public List<ReviewDto> getAllReviewsForExpert(Integer expertId) {
+        return reviewRepository.findAllByExperts(expertId).stream()
+                .map(ReviewDto::new)
+                .collect(Collectors.toList());
     }
 }

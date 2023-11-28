@@ -1,6 +1,7 @@
 package dbdip.demo.expert;
 
 import dbdip.demo.expert.dto.ExpertsDto;
+import dbdip.demo.expert.dto.ReviewDto;
 import dbdip.demo.reservation.entity.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,8 +25,8 @@ public class ExpertsController {
         return expertsService.filterExperts(field, minPrice, maxPrice, city);
     }
     @GetMapping("/{expertId}/reviews")
-    public ResponseEntity<List<Review>> getAllReviewsForExpert(@PathVariable Integer expertId) {
-        List<Review> reviews = expertsService.getAllReviewsForExpert(expertId);
+    public ResponseEntity<List<ReviewDto>> getAllReviewsForExpert(@PathVariable Integer expertId) {
+        List<ReviewDto> reviews = expertsService.getAllReviewsForExpert(expertId);
 
         if (reviews != null && !reviews.isEmpty()) {
             return new ResponseEntity<>(reviews, HttpStatus.OK);
