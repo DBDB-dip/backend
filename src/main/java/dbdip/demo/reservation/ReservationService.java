@@ -12,6 +12,7 @@ import dbdip.demo.users.entity.Users;
 import dbdip.demo.users.repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReviewRepository reviewRepository;
@@ -29,8 +31,11 @@ public class ReservationService {
     public void createReservation(Integer userId, Integer expertId, LocalDate reservDate, Integer reservTime) {
         Users user = usersRepository.findById(userId).orElse(null);
         Experts expert = expertsRepository.findById(expertId).orElse(null);
+        log.info("{}, {}, {}, {}", userId, expertId, reservDate, reservTime);
+
 
         if (user != null && expert != null) {
+            log.info("{}, {}", user.getName(), expert.getName());
             final Reservation reservation = Reservation.builder()
                     .users(user)
                     .experts(expert)
@@ -51,6 +56,7 @@ public class ReservationService {
                     .comments(comments)
                     .starRate(starRate)
                     .build();
+            log.info(String.valueOf(review.getId()));
 
             reviewRepository.save(review);
         }

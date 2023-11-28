@@ -2,6 +2,7 @@ package dbdip.demo.reservation;
 import dbdip.demo.reservation.dto.ReservationDto;
 import dbdip.demo.reservation.entity.ReservationStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,20 +19,20 @@ public class ReservationController {
     public ResponseEntity<String> createReservation(
             @RequestParam("userId") Integer userId,
             @RequestParam("expertId") Integer expertId,
-            @RequestParam("reservDate") LocalDate reservDate,
+            @RequestParam("reservDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate reservDate,
             @RequestParam("reservTime") Integer reservTime
     ) {
         reservationService.createReservation(userId, expertId, reservDate, reservTime);
 
         return new ResponseEntity<>("Reservation created successfully", HttpStatus.CREATED);
     }
-    @GetMapping
+    @GetMapping // OK
     public ResponseEntity<List<ReservationDto>> getAllReservationByUser(
             @RequestParam("userId") Integer userId
     ) {
         return new ResponseEntity<>(reservationService.getAllReservation(userId), HttpStatus.OK);
     }
-    @GetMapping("/status")
+    @GetMapping("/status") // OK
     public ResponseEntity<List<ReservationDto>> getReservationsByStatus(
             @RequestParam("userId") Integer userId,
             @RequestParam("status") ReservationStatus status) {

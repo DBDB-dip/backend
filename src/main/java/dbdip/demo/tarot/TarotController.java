@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TarotController {
     private final TarotService tarotService;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId}") //OK
     public ResponseEntity<TarotCardDescription> drawTodayTarot(@PathVariable Integer userId) {
         TarotCardDescription selectedCard = tarotService.drawTodayTarot(userId);
 
