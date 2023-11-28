@@ -15,14 +15,12 @@ public class UsersService {
     // DB에 user insert
     public void write(Users user)
     {
-
-
         usersRepository.save(user);
     }
 
     // DB에 해당 이메일, 비밀번로를 가진 user 있으면 userid리턴
     // 없으면 -1 리턴
-    public int login(String email, String passwd)
+    public Integer login(String email, String passwd)
     {
         List<Users> list = usersRepository.findByEmailAndPassword(email, passwd);
 
