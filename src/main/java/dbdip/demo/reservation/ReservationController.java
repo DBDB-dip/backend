@@ -31,7 +31,7 @@ public class ReservationController {
     ) {
         return new ResponseEntity<>(reservationService.getAllReservation(userId), HttpStatus.OK);
     }
-    @GetMapping("/reservations")
+    @GetMapping("/status")
     public ResponseEntity<List<ReservationDto>> getReservationsByStatus(
             @RequestParam("userId") Integer userId,
             @RequestParam("status") ReservationStatus status) {
