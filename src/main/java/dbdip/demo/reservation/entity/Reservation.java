@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reservationid")
+    @Column(name = "reservid")
     private Integer id;
     @ManyToOne
     @JoinColumn(name = "userid")

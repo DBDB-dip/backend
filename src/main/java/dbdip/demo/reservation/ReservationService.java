@@ -2,6 +2,7 @@ package dbdip.demo.reservation;
 
 import dbdip.demo.expert.entity.Experts;
 import dbdip.demo.expert.repository.ExpertsRepository;
+import dbdip.demo.reservation.dto.ReservationDto;
 import dbdip.demo.reservation.entity.Reservation;
 import dbdip.demo.reservation.entity.Review;
 import dbdip.demo.reservation.repository.ReservationRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,15 +54,21 @@ public class ReservationService {
             reviewRepository.save(review);
         }
     }
-    public List<Reservation> getAllReservation(Integer userId){
+    public List<ReservationDto> getAllReservation(Integer userId){
         Users users = usersRepository.findById(userId).orElse(null);
-        return reservationRepository.findAllByUsers(users);
+        return reservationRepository.findAllByUsers(users).stream()
+                .map(ReservationDto::new)
+                .collect(Collectors.toList());
     }
-    public List<Reservation> getAllReservationBeforeToday(Integer userId){
-        return reservationRepository.findAllByUsersBeforeToday(userId, LocalDate.now());
+    public List<ReservationDto> getAllReservationBeforeToday(Integer userId){
+        return reservationRepository.findAllByUsersBeforeToday(userId, LocalDate.now()).stream()
+                .map(ReservationDto::new)
+                .collect(Collectors.toList());
     }
-    public List<Reservation> getAllReservationAfterToday(Integer userId){
-        return reservationRepository.findAllByUsersAfterToday(userId, LocalDate.now());
+    public List<ReservationDto> getAllReservationAfterToday(Integer userId){
+        return reservationRepository.findAllByUsersAfterToday(userId, LocalDate.now()).stream()
+                .map(ReservationDto::new)
+                .collect(Collectors.toList());
     }
 
 }
