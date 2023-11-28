@@ -27,7 +27,7 @@ public class Experts {
     @Column(name = "career")
     private Integer career;
     @Column(name = "sex")
-    private Character Sex;
+    private Character sex;
 
     @OneToOne(mappedBy = "experts", cascade = CascadeType.ALL)
     private Stores store;

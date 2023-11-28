@@ -1,6 +1,6 @@
 package dbdip.demo.expert;
 
-import dbdip.demo.expert.entity.Experts;
+import dbdip.demo.expert.dto.ExpertsDto;
 import dbdip.demo.reservation.entity.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import java.util.List;
 public class ExpertsController {
     private final ExpertsService expertsService;
     @GetMapping("/filter")
-    public List<Experts> filterExperts(
+    public List<ExpertsDto> filterExperts(
             @RequestParam(required = false) String field,
             @RequestParam(required = false) Integer minPrice,
             @RequestParam(required = false) Integer maxPrice,
