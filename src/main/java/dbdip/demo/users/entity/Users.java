@@ -1,10 +1,13 @@
 package dbdip.demo.users.entity;
 
+import dbdip.demo.reservation.entity.Reservation;
 import jakarta.persistence.*;
 import lombok.Setter;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,4 +29,7 @@ public class Users {
     private char sex;
     @Column(name = "birthdate")
     private LocalDate birthdate;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Reservation> reservations = new ArrayList<Reservation>();
 }

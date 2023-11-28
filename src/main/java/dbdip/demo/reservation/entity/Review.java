@@ -22,4 +22,5 @@ public class Review {
     private String comments;
     @Column(name = "starrate")
     private Float starRate;
+
 }

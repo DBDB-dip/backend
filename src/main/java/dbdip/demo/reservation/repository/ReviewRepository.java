@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
     @Query(value = "select distinct R " +
-            "from Review R inner join R.reservation V on R.reservation.id = V.id " +
+            "from Review R join R.reservation V " +
             "where V.experts.id = :expert")
     List<Review> findAllByExperts(@Param(value = "expert") Integer expertsId);
 }
