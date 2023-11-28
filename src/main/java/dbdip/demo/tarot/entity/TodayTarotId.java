@@ -17,10 +17,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TodayTarotId implements Serializable {
-    @ManyToOne
-    @JoinColumn(name = "UserId")
-    private Users user;
-    @Column(name = "TarotDate")
+    @Column(name = "userid")
+    private Integer userId;
+    @Column(name = "tarotdate")
     private LocalDate tarotDate;
 
 }

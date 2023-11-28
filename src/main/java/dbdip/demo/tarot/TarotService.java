@@ -28,7 +28,7 @@ public class TarotService {
             LocalDate today = LocalDate.now();
             selectedCard = selectRandomTarotCard();
 
-            TodayTarotId todayTarotId = new TodayTarotId(user, today);
+            TodayTarotId todayTarotId = new TodayTarotId(user.getId(), today);
             TodayTarot todayTarot = TodayTarot.builder()
                     .id(todayTarotId)
                     .cardDescription(selectedCard)
