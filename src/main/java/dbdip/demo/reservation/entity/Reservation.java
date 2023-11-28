@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
+import java.util.concurrent.atomic.LongAccumulator;
 
 @Entity
 @Slf4j
@@ -29,4 +30,14 @@ public class Reservation {
     private LocalDate reservDate;
     @Column(name = "reservtime")
     private Integer reservTime;
+
+    public ReservationStatus getStatus() {
+        if (this.reservDate.isBefore(LocalDate.now())) {
+            return ReservationStatus.BEFORE_TODAY;
+        } else if (this.reservDate.isEqual(LocalDate.now())) {
+            return ReservationStatus.TODAY;
+        } else {
+            return ReservationStatus.AFTER_TODAY;
+        }
+    }
 }

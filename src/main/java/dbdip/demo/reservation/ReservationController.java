@@ -1,5 +1,6 @@
 package dbdip.demo.reservation;
 import dbdip.demo.reservation.dto.ReservationDto;
+import dbdip.demo.reservation.entity.ReservationStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,17 +31,12 @@ public class ReservationController {
     ) {
         return new ResponseEntity<>(reservationService.getAllReservation(userId), HttpStatus.OK);
     }
-    @GetMapping("/before")
-    public ResponseEntity<List<ReservationDto>> getAllReservationByUserAndBeforeToday(
-            @RequestParam("userId") Integer userId
-    ) {
-        return new ResponseEntity<>(reservationService.getAllReservationBeforeToday(userId), HttpStatus.OK);
-    }
-    @GetMapping("/after")
-    public ResponseEntity<List<ReservationDto>> getAllReservationByUserAndAfterToday(
-            @RequestParam("userId") Integer userId
-    ) {
-        return new ResponseEntity<>(reservationService.getAllReservationAfterToday(userId), HttpStatus.OK);
+    @GetMapping("/reservations")
+    public ResponseEntity<List<ReservationDto>> getReservationsByStatus(
+            @RequestParam("userId") Integer userId,
+            @RequestParam("status") ReservationStatus status) {
+
+        return new ResponseEntity<>(reservationService.filterReservationsByStatus(userId, status), HttpStatus.OK);
     }
     @PostMapping("/reviews")
     public ResponseEntity<String> createReview(

@@ -4,6 +4,7 @@ import dbdip.demo.expert.entity.Experts;
 import dbdip.demo.expert.repository.ExpertsRepository;
 import dbdip.demo.reservation.dto.ReservationDto;
 import dbdip.demo.reservation.entity.Reservation;
+import dbdip.demo.reservation.entity.ReservationStatus;
 import dbdip.demo.reservation.entity.Review;
 import dbdip.demo.reservation.repository.ReservationRepository;
 import dbdip.demo.reservation.repository.ReviewRepository;
@@ -60,13 +61,12 @@ public class ReservationService {
                 .map(ReservationDto::new)
                 .collect(Collectors.toList());
     }
-    public List<ReservationDto> getAllReservationBeforeToday(Integer userId){
-        return reservationRepository.findAllByUsersBeforeToday(userId, LocalDate.now()).stream()
-                .map(ReservationDto::new)
-                .collect(Collectors.toList());
-    }
-    public List<ReservationDto> getAllReservationAfterToday(Integer userId){
-        return reservationRepository.findAllByUsersAfterToday(userId, LocalDate.now()).stream()
+    public List<ReservationDto> filterReservationsByStatus(Integer userId, ReservationStatus status) {
+        Users users = usersRepository.findById(userId).orElse(null);
+
+        // 해당 상태에 해당하는 예약만 필터링하여 반환
+        return reservationRepository.findAllByUsers(users).stream()
+                .filter(reservation -> reservation.getStatus() == status)
                 .map(ReservationDto::new)
                 .collect(Collectors.toList());
     }
