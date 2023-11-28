@@ -22,7 +22,7 @@ public class Consult {
     @Column(name = "price_hour")
     private Double priceHour;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "eid")
     private Experts experts;
 }

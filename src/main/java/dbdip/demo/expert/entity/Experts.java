@@ -1,10 +1,14 @@
 package dbdip.demo.expert.entity;
 
+import dbdip.demo.reservation.entity.Reservation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Slf4j
@@ -31,8 +35,11 @@ public class Experts {
 
     @OneToOne(mappedBy = "experts", cascade = CascadeType.ALL)
     private Stores store;
-    @OneToOne(mappedBy = "experts", cascade = CascadeType.ALL)
-    private Consult consult;
+    @OneToMany(mappedBy = "experts", cascade = CascadeType.ALL)
+    private List<Consult> consult = new ArrayList<Consult>();
+
+    @OneToMany(mappedBy = "experts", cascade = CascadeType.ALL)
+    private List<Reservation> reservations = new ArrayList<Reservation>();
 
 
 }
