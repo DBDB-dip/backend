@@ -4,6 +4,7 @@ import dbdip.demo.reservation.entity.Reservation;
 import jakarta.persistence.*;
 import lombok.Setter;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class Users {
     @Column(name = "sex")
     private char sex;
     @Column(name = "birthdate")
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate birthdate;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
