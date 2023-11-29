@@ -1,11 +1,15 @@
 package dbdip.demo.users;
 
+import dbdip.demo.users.dto.UsersDto;
 import dbdip.demo.users.entity.Users;
 import dbdip.demo.users.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import springfox.documentation.swagger2.mappers.ModelMapper;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UsersService {
@@ -36,5 +40,14 @@ public class UsersService {
         List<Users> list = usersRepository.findByEmail(email);
 
         return !list.isEmpty();
+    }
+
+    public UsersDto getInformation(Integer userId)
+    {
+
+
+        Optional<Users> user = usersRepository.findById(userId);
+
+        return user.map(UsersDto::new).orElse(null);
     }
 }

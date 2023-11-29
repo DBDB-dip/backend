@@ -1,13 +1,11 @@
 package dbdip.demo.users;
 
+import dbdip.demo.users.dto.UsersDto;
 import dbdip.demo.users.entity.Users;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UsersController {
@@ -47,7 +45,7 @@ public class UsersController {
 
     // 로그인 시 email, 비밀번호가 해당 경로로 전송
     // 로그인 실패시 -1, 성공시 uid 리턴
-    @PostMapping("/login")
+    @PostMapping("/loginpro")
     @ResponseBody
     public Integer loginPro(
             @RequestParam("email") String email,
@@ -55,4 +53,13 @@ public class UsersController {
     {
         return userService.login(email, password);
     }
+
+    @GetMapping("/{userId}/information")
+    @ResponseBody
+    public UsersDto gerUserInformation(
+            @PathVariable("userId") Integer userId
+    ) {
+        return userService.getInformation(userId);
+    }
+
 }
