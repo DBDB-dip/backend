@@ -5,12 +5,14 @@ import dbdip.demo.users.entity.Users;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class UsersController {
@@ -50,13 +52,12 @@ public class UsersController {
 
     // 로그인 시 email, 비밀번호가 해당 경로로 전송
     // 로그인 실패시 -1, 성공시 uid 리턴
-    @PostMapping("/loginpro")
-    @ResponseBody
-    public Integer loginPro(
+    @GetMapping("/loginpro")
+    public HttpEntity<List<UsersDto>> loginPro(
             @RequestParam("email") String email,
             @RequestParam("password") String password)
     {
-        return userService.login(email, password);
+        return new HttpEntity<>(userService.login(email, password));
     }
 
     // 회원 정보 조회

@@ -25,15 +25,10 @@ public class UsersService {
 
     // DB에 해당 이메일, 비밀번로를 가진 user 있으면 userid리턴
     // 없으면 -1 리턴
-    public Integer login(String email, String passwd)
+    public List<UsersDto> login(String email, String passwd)
     {
-        List<Users> list = usersRepository.findByEmailAndPassword(email, passwd);
-
-        if(list.isEmpty())
-            return -1;
-
-        else
-            return list.get(0).getId();
+        return usersRepository.findByEmailAndPassword(email, passwd).stream()
+                .map(UsersDto::new).toList();
     }
 
     public boolean isEmailOverlap(String email)
