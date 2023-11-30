@@ -52,10 +52,11 @@ public class UsersController {
 
     // 로그인 시 email, 비밀번호가 해당 경로로 전송
     // 로그인 실패시 -1, 성공시 uid 리턴
-    @GetMapping("/loginpro")
+    @PostMapping("/loginpro")
+    @CrossOrigin(origins = "http://localhost:3000")
     public HttpEntity<List<UsersDto>> loginPro(
-            @RequestParam("email") String email,
-            @RequestParam("password") String password)
+            @RequestParam("Email") String email,
+            @RequestParam("Password") String password)
     {
         return new HttpEntity<>(userService.login(email, password));
     }

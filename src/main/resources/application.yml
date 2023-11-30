@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521:xe
+    url: jdbc:oracle:thin:@localhost:1521:orcl
     username: teamplay
     password: teamplay
     driver-class-name: oracle.jdbc.OracleDriver
