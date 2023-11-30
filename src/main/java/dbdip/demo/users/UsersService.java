@@ -20,8 +20,8 @@ public class UsersService {
     // DB에 user insert
     public void write(Users user)
     {
-        // int max_id = usersRepository.findMaxId();
-        // user.setId(max_id + 1);
+        int max_id = usersRepository.findMaxId();
+        user.setId(max_id + 1);
         usersRepository.save(user);
     }
 
