@@ -30,30 +30,18 @@ public class UsersController {
     // 가입 양식에 맞춰 user가 post 방식으로 데이터 전송
     @PostMapping("/joinpro")
     @Transactional
-    public String userJoinPro(Users user)
+    public ResponseEntity<String> userJoinPro(Users user)
     {
-        // ㅠㅠ if문에서 이메일이 중복되는 걸 검사하면 어떻게 처리해야할지 모르겠어요
         if(userService.isEmailOverlap(user.getEmail()))
-            return "";
+            return new ResponseEntity<>("Failed", HttpStatus.CONFLICT);
 
-        // 이메일이 중복되지 않으면 회원 가입
         userService.write(user);
-
-        // ㅠㅠ 다시 메인페이지 ("/")로 돌아가야하는데 그 처리를 못 하겠어요..
-        return "";
-    }
-
-    @GetMapping("/")
-    public String mainPage()
-    {
-        // ㅠㅠ 메인 페이지 html? 을 받아야 하는데 없어서 비워놓았어요
-        return "";
+        return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
 
     // 로그인 시 email, 비밀번호가 해당 경로로 전송
     // 로그인 실패시 -1, 성공시 uid 리턴
     @PostMapping("/loginpro")
-    @CrossOrigin(origins = "http://localhost:3000")
     public HttpEntity<List<UsersDto>> loginPro(
             @RequestParam("Email") String email,
             @RequestParam("Password") String password)
@@ -86,7 +74,7 @@ public class UsersController {
         if (result == 0)
             return new ResponseEntity<>("Information Modification Success", HttpStatus.CREATED);
         else
-            return new ResponseEntity<>("Information Modification Failed", HttpStatus.OK);
+            return new ResponseEntity<>("Information Modification Failed", HttpStatus.CONFLICT);
     }
 
 }
