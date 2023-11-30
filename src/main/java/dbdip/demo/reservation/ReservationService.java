@@ -31,11 +31,8 @@ public class ReservationService {
     public void createReservation(Integer userId, Integer expertId, LocalDate reservDate, Integer reservTime) {
         Users user = usersRepository.findById(userId).orElse(null);
         Experts expert = expertsRepository.findById(expertId).orElse(null);
-        log.info("{}, {}, {}, {}", userId, expertId, reservDate, reservTime);
-
 
         if (user != null && expert != null) {
-            log.info("{}, {}", user.getName(), expert.getName());
             final Reservation reservation = Reservation.builder()
                     .users(user)
                     .experts(expert)
@@ -48,6 +45,7 @@ public class ReservationService {
     }
     @Transactional
     public void createReview(Integer reservationId, String comments, Float starRate) {
+        log.info("{}, {}, {}", reservationId, comments, starRate);
         Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
 
         if (reservation != null) {

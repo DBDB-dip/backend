@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReservationController {
     private final ReservationService reservationService;
-    @PostMapping
+    @PostMapping // OK
     public ResponseEntity<String> createReservation(
             @RequestParam("userId") Integer userId,
             @RequestParam("expertId") Integer expertId,
@@ -39,7 +39,7 @@ public class ReservationController {
 
         return new ResponseEntity<>(reservationService.filterReservationsByStatus(userId, status), HttpStatus.OK);
     }
-    @PostMapping("/reviews")
+    @PostMapping("/reviews") // OK
     public ResponseEntity<String> createReview(
             @RequestParam("reservationId") Integer reservationId,
             @RequestParam("comments") String comments,

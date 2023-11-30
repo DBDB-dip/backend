@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExpertsController {
     private final ExpertsService expertsService;
-    @GetMapping("/filter")
+    @GetMapping("/filter") //OK
     public List<ExpertsDto> filterExperts(
             @RequestParam(value="field", required = false) String field,
             @RequestParam(value="minPrice", required = false) Integer minPrice,
@@ -24,7 +24,7 @@ public class ExpertsController {
     ) {
         return expertsService.filterExperts(field, minPrice, maxPrice, city);
     }
-    @GetMapping("/{expertId}/reviews")
+    @GetMapping("/{expertId}/reviews") // OK
     public ResponseEntity<List<ReviewDto>> getAllReviewsForExpert(@PathVariable("expertId") Integer expertId) {
         List<ReviewDto> reviews = expertsService.getAllReviewsForExpert(expertId);
 
