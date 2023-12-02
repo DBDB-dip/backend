@@ -16,7 +16,7 @@ public class TarotController {
     private final TarotService tarotService;
 
     @GetMapping("/{userId}") //OK
-    public ResponseEntity<TarotCardDescription> drawTodayTarot(@PathVariable Integer userId) {
+    public ResponseEntity<TarotCardDescription> drawTodayTarot(@PathVariable("userId") Integer userId) {
         TarotCardDescription selectedCard = tarotService.drawTodayTarot(userId);
 
         if (selectedCard != null) {

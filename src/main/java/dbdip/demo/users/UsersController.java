@@ -64,13 +64,12 @@ public class UsersController {
     public ResponseEntity<String> modificationInformation(
             @PathVariable("userId") Integer userId,
             @RequestParam(value="name", required = false) String name,
-            @RequestParam(value="email", required = false) String email,
             @RequestParam(value="phoneNumber", required = false) String phoneNumber,
             @RequestParam(value="sex", required = false) Character sex,
             @RequestParam(value="birthDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate birthDate,
             @RequestParam(value="password", required = false) String password
     ) {
-        int result = userService.infoModification(userId, name, email, phoneNumber, sex, birthDate, password);
+        int result = userService.infoModification(userId, name, phoneNumber, sex, birthDate, password);
         if (result == 0)
             return new ResponseEntity<>("Information Modification Success", HttpStatus.CREATED);
         else
