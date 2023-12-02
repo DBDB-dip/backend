@@ -32,12 +32,28 @@ public class ReservationController {
     ) {
         return new ResponseEntity<>(reservationService.getAllReservation(userId), HttpStatus.OK);
     }
-    @GetMapping("/status") // OK
+    @GetMapping("/") // OK
     public ResponseEntity<List<ReservationDto>> getReservationsByStatus(
             @RequestParam("userId") Integer userId,
-            @RequestParam("status") ReservationStatus status) {
+            @RequestParam("status") String status) {
 
-        return new ResponseEntity<>(reservationService.filterReservationsByStatus(userId, status), HttpStatus.OK);
+        ReservationStatus r = null;
+
+        if(status.equals("before"))
+        {
+            r =ReservationStatus.BEFORE_TODAY;
+        }
+
+        else if(status.equals("after"))
+        {
+            r = ReservationStatus.AFTER_TODAY;
+        }
+
+        else {
+            r = ReservationStatus.TODAY;
+        }
+
+        return new ResponseEntity<>(reservationService.filterReservationsByStatus(userId, r), HttpStatus.OK);
     }
     @PostMapping("/reviews") // OK
     public ResponseEntity<String> createReview(

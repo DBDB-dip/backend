@@ -49,8 +49,13 @@ public class UsersService {
         return user.map(UsersDto::new).orElse(null);
     }
 
-    public int infoModification(Integer userId, String name, String email, String phoneNumber, Character sex, LocalDate birthDate, String password)
+    public int infoModification(Integer userId, String name, String phoneNumber, Character sex, LocalDate birthDate, String password)
     {
+        System.out.println(name);
+        System.out.println(phoneNumber);
+        System.out.println(sex);
+        System.out.println(password);
+
         if(userId == null)
             return -1;
 
@@ -65,44 +70,39 @@ public class UsersService {
             user.setName(name);
         }
 
-        else if(email != null)
-        {
-            if(!isEmailOverlap(email))
-                user.setEmail(email);
-
-            else return -1;
-        }
-
-        else if(phoneNumber != null)
+        if(phoneNumber != null)
         {
             user.setPhoneNumber(phoneNumber);
         }
 
-        else if(sex != null)
+        if(sex != null)
         {
-            if(sex == 'M' || sex == 'F')
+            if(sex.equals('M') || sex.equals('F'))
                 user.setSex(sex);
 
             else return -1;
         }
 
-        else if(birthDate != null)
+        if(birthDate != null)
         {
             user.setBirthdate(birthDate);
         }
 
-        else if(password != null)
+        if(password != null)
         {
             user.setPassword(password);
         }
 
-        // 전부 null
-        else
-        {
-            return -1;
-        }
-
         usersRepository.save(user);
+
+        // 디버깅용
+        System.out.println(user.getName());
+        System.out.println(user.getPassword());
+        System.out.println(user.getPhoneNumber());
+        System.out.println(user.getSex());
+        System.out.println(user.getBirthdate());
+
+
         return 0;
     }
 }
