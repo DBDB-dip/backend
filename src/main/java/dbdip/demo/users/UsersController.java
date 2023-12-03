@@ -76,4 +76,12 @@ public class UsersController {
             return new ResponseEntity<>("Information Modification Failed", HttpStatus.CONFLICT);
     }
 
+    @PostMapping("{userId}/resign")
+    public ResponseEntity<String> resignUser(
+            @PathVariable("userId") Integer userId
+    ){
+        userService.resign(userId);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
 }
