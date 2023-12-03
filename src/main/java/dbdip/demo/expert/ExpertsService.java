@@ -2,7 +2,11 @@ package dbdip.demo.expert;
 
 import dbdip.demo.expert.dto.ExpertsDto;
 import dbdip.demo.expert.dto.ReviewDto;
+import dbdip.demo.expert.dto.WorkAtDto;
+import dbdip.demo.expert.entity.Experts;
+import dbdip.demo.expert.repository.ConsultRepository;
 import dbdip.demo.expert.repository.ExpertsRepository;
+import dbdip.demo.expert.repository.WorkAtRepository;
 import dbdip.demo.reservation.entity.Review;
 import dbdip.demo.reservation.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +20,13 @@ import java.util.stream.Collectors;
 public class ExpertsService {
     private final ExpertsRepository expertsRepository;
     private final ReviewRepository reviewRepository;
+    private final WorkAtRepository workAtRepository;
+
+    public List<WorkAtDto> getExpertsWorkAtSchedule(Integer expertsId){
+        Experts experts = expertsRepository.findById(expertsId).orElseThrow();
+        return workAtRepository.findAllByExpert(experts).stream()
+                .map(WorkAtDto::new).collect(Collectors.toList());
+    }
 
     public List<ExpertsDto> filterExperts(String field, Integer minPrice, Integer maxPrice, String city) {
         // 상담분야, 최소 금액, 최대 금액, 지역에 따라 전문가 필터링하기
