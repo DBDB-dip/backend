@@ -2,6 +2,7 @@ package dbdip.demo.expert;
 
 import dbdip.demo.expert.dto.ExpertsDto;
 import dbdip.demo.expert.dto.ReviewDto;
+import dbdip.demo.expert.dto.WorkAtDto;
 import dbdip.demo.reservation.entity.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,13 @@ public class ExpertsController {
             @RequestParam(value="city", required = false) String city
     ) {
         return expertsService.filterExperts(field, minPrice, maxPrice, city);
+    }
+    @GetMapping("/{expertsId}") //OK
+    public ResponseEntity<List<WorkAtDto>> getExpertsConsultSchedule(
+            @PathVariable(name = "expertsId") Integer expertsId
+    ) {
+        return new ResponseEntity<>(
+                expertsService.getExpertsWorkAtSchedule(expertsId), HttpStatus.OK);
     }
     @GetMapping("/{expertId}/reviews") // OK
     public ResponseEntity<List<ReviewDto>> getAllReviewsForExpert(@PathVariable("expertId") Integer expertId) {
