@@ -30,23 +30,35 @@ public class ReservationService {
     private final ExpertsRepository expertsRepository;
     private final UsersRepository usersRepository;
     @Transactional
-    public void createReservation(Integer userId, Integer expertId, LocalDate reservDate, Integer reservTime) {
+    public String createReservation(Integer userId, Integer expertId, LocalDate reservDate, Integer reservTime) {
         Users user = usersRepository.findById(userId).orElse(null);
         Experts expert = expertsRepository.findById(expertId).orElse(null);
 
         if (user != null && expert != null) {
-            final Reservation reservation = Reservation.builder()
-                    .users(user)
-                    .experts(expert)
-                    .reservDate(reservDate)
-                    .reservTime(reservTime)
-                    .build();
 
-            reservationRepository.save(reservation);
+            boolean isTimeSlotAvailableByExperts = reservationRepository.existsByExpertsAndReservDateAndReservTime(expert, reservDate, reservTime);
+            boolean isTimeSlotAvailableByUsers = reservationRepository.existsByUsersAndReservDateAndReservTime(user, reservDate, reservTime);
+
+            if ((!isTimeSlotAvailableByExperts) && (!isTimeSlotAvailableByUsers)) {
+                // 해당 시간에 예약이 없으면 새 예약 생성
+                final Reservation reservation = Reservation.builder()
+                        .users(user)
+                        .experts(expert)
+                        .reservDate(reservDate)
+                        .reservTime(reservTime)
+                        .build();
+
+                reservationRepository.save(reservation);
+                return "예약되었습니다.";
+            } else {
+                log.info("해당 시간대에 이미 예약이 있습니다.");
+                return "해당 시간대에 이미 예약이 있습니다.";
+            }
         }
+        return "예약할 수 없습니다.";
     }
     @Transactional
-    public void createReservationByDay(Integer userId, Integer expertId, Integer reservDay, Integer reservTime) {
+    public String createReservationByDay(Integer userId, Integer expertId, Integer reservDay, Integer reservTime) {
         Users user = usersRepository.findById(userId).orElse(null);
         Experts expert = expertsRepository.findById(expertId).orElse(null);
 
@@ -56,15 +68,27 @@ public class ReservationService {
 
             LocalDate reservDate = today.with(TemporalAdjusters.nextOrSame(desiredDay));
 
-            final Reservation reservation = Reservation.builder()
-                    .users(user)
-                    .experts(expert)
-                    .reservDate(reservDate)
-                    .reservTime(reservTime)
-                    .build();
+            boolean isTimeSlotAvailableByExperts = reservationRepository.existsByExpertsAndReservDateAndReservTime(expert, reservDate, reservTime);
+            boolean isTimeSlotAvailableByUsers = reservationRepository.existsByUsersAndReservDateAndReservTime(user, reservDate, reservTime);
 
-            reservationRepository.save(reservation);
+            if (!(isTimeSlotAvailableByExperts || isTimeSlotAvailableByUsers)) {
+                // 해당 시간에 예약이 없으면 새 예약 생성
+                final Reservation reservation = Reservation.builder()
+                        .users(user)
+                        .experts(expert)
+                        .reservDate(reservDate)
+                        .reservTime(reservTime)
+                        .build();
+
+                reservationRepository.save(reservation);
+
+                return "예약되었습니다.";
+            } else {
+                log.info("해당 시간대에 이미 예약이 있습니다.");
+                return "해당 시간대에 이미 예약이 있습니다.";
+            }
         }
+        return "예약할 수 없습니다.";
     }
     @Transactional
     public void createReview(Integer reservationId, String comments, Float starRate) {
