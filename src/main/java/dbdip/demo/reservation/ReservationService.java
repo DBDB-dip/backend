@@ -15,7 +15,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +35,27 @@ public class ReservationService {
         Experts expert = expertsRepository.findById(expertId).orElse(null);
 
         if (user != null && expert != null) {
+            final Reservation reservation = Reservation.builder()
+                    .users(user)
+                    .experts(expert)
+                    .reservDate(reservDate)
+                    .reservTime(reservTime)
+                    .build();
+
+            reservationRepository.save(reservation);
+        }
+    }
+    @Transactional
+    public void createReservationByDay(Integer userId, Integer expertId, Integer reservDay, Integer reservTime) {
+        Users user = usersRepository.findById(userId).orElse(null);
+        Experts expert = expertsRepository.findById(expertId).orElse(null);
+
+        if (user != null && expert != null) {
+            LocalDate today = LocalDate.now();
+            DayOfWeek desiredDay = DayOfWeek.of(reservDay);
+
+            LocalDate reservDate = today.with(TemporalAdjusters.nextOrSame(desiredDay));
+
             final Reservation reservation = Reservation.builder()
                     .users(user)
                     .experts(expert)
