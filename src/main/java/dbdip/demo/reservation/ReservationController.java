@@ -22,20 +22,23 @@ public class ReservationController {
             @RequestParam("reservDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate reservDate,
             @RequestParam("reservTime") Integer reservTime
     ) {
-        reservationService.createReservation(userId, expertId, reservDate, reservTime);
 
-        return new ResponseEntity<>("Reservation created successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                reservationService.createReservation(userId, expertId, reservDate, reservTime),
+                HttpStatus.CREATED);
     }
-    @PostMapping("/day")
+    @PostMapping("/day") //OK
     public ResponseEntity<String> createReservationByDay(
             @RequestParam("userId") Integer userId,
             @RequestParam("expertId") Integer expertId,
             @RequestParam("reservDay") Integer reservDay,
             @RequestParam("reservTime") Integer reservTime
     ) {
-        reservationService.createReservationByDay(userId, expertId, reservDay, reservTime);
 
-        return new ResponseEntity<>("Reservation created successfully", HttpStatus.CREATED);
+
+        return new ResponseEntity<>(
+                reservationService.createReservationByDay(userId, expertId, reservDay, reservTime),
+                HttpStatus.CREATED);
     }
     @GetMapping // OK
     public ResponseEntity<List<ReservationDto>> getAllReservationByUser(
