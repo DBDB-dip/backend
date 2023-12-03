@@ -105,4 +105,9 @@ public class UsersService {
 
         return 0;
     }
+
+    public void resign(Integer userId)
+    {
+        usersRepository.deleteById(userId);
+    }
 }
