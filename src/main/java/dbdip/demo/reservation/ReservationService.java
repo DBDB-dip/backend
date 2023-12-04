@@ -10,16 +10,17 @@ import dbdip.demo.reservation.repository.ReservationRepository;
 import dbdip.demo.reservation.repository.ReviewRepository;
 import dbdip.demo.users.entity.Users;
 import dbdip.demo.users.repository.UsersRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class ReservationService {
     private final ReviewRepository reviewRepository;
     private final ExpertsRepository expertsRepository;
     private final UsersRepository usersRepository;
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public String createReservation(Integer userId, Integer expertId, LocalDate reservDate, Integer reservTime) {
         Users user = usersRepository.findById(userId).orElse(null);
         Experts expert = expertsRepository.findById(expertId).orElse(null);
@@ -38,6 +39,9 @@ public class ReservationService {
 
             boolean isTimeSlotAvailableByExperts = reservationRepository.existsByExpertsAndReservDateAndReservTime(expert, reservDate, reservTime);
             boolean isTimeSlotAvailableByUsers = reservationRepository.existsByUsersAndReservDateAndReservTime(user, reservDate, reservTime);
+
+            log.info("{}",isTimeSlotAvailableByExperts);
+            log.info("{}", isTimeSlotAvailableByUsers);
 
             if ((!isTimeSlotAvailableByExperts) && (!isTimeSlotAvailableByUsers)) {
                 // 해당 시간에 예약이 없으면 새 예약 생성
@@ -57,10 +61,14 @@ public class ReservationService {
         }
         return "예약할 수 없습니다.";
     }
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public String createReservationByDay(Integer userId, Integer expertId, Integer reservDay, Integer reservTime) {
+        log.info("{},{}, {}, {}", userId,expertId,reservDay, reservTime);
+
         Users user = usersRepository.findById(userId).orElse(null);
         Experts expert = expertsRepository.findById(expertId).orElse(null);
+
+        log.info("{}, {}", user.getId(), expert.getId());
 
         if (user != null && expert != null) {
             LocalDate today = LocalDate.now();
@@ -70,6 +78,9 @@ public class ReservationService {
 
             boolean isTimeSlotAvailableByExperts = reservationRepository.existsByExpertsAndReservDateAndReservTime(expert, reservDate, reservTime);
             boolean isTimeSlotAvailableByUsers = reservationRepository.existsByUsersAndReservDateAndReservTime(user, reservDate, reservTime);
+
+            log.info("{}",isTimeSlotAvailableByExperts);
+            log.info("{}", isTimeSlotAvailableByUsers);
 
             if (!(isTimeSlotAvailableByExperts || isTimeSlotAvailableByUsers)) {
                 // 해당 시간에 예약이 없으면 새 예약 생성
@@ -90,7 +101,7 @@ public class ReservationService {
         }
         return "예약할 수 없습니다.";
     }
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void createReview(Integer reservationId, String comments, Float starRate) {
         log.info("{}, {}, {}", reservationId, comments, starRate);
         Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
@@ -106,12 +117,15 @@ public class ReservationService {
             reviewRepository.save(review);
         }
     }
+
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public List<ReservationDto> getAllReservation(Integer userId){
         Users users = usersRepository.findById(userId).orElse(null);
         return reservationRepository.findAllByUsers(users).stream()
                 .map(ReservationDto::new)
                 .collect(Collectors.toList());
     }
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public List<ReservationDto> filterReservationsByStatus(Integer userId, ReservationStatus status) {
         Users users = usersRepository.findById(userId).orElse(null);
 

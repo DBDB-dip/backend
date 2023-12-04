@@ -2,13 +2,14 @@ package dbdip.demo.users;
 
 import dbdip.demo.users.dto.UsersDto;
 import dbdip.demo.users.entity.Users;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public class UsersController {
 
     // 가입 양식에 맞춰 user가 post 방식으로 데이터 전송
     @PostMapping("/joinpro")
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public ResponseEntity<String> userJoinPro(Users user)
     {
         if(userService.isEmailOverlap(user.getEmail()))
